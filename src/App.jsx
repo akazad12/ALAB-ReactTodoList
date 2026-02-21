@@ -1,20 +1,12 @@
 import { useState } from 'react'
+import CreateList from './pages/CreateList.jsx'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
-
-  return (
-    <>
-    <h1>Todo List</h1>
-    
-    {/* Adds a new task */}
-    <input
-      type = "text"
-      placeholder= "Add new todo"
-    />
-    
-    </>
+  return(
+  <>
+   <CreateList />
+  </>
   )
 }
 
