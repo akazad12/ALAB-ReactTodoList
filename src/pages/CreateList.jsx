@@ -1,7 +1,19 @@
 import { useState } from "react";
 
 export default function CreateList() {
-  const [count, setCount] = useState(0);
+  const [todos,setTodos] = useState([])
+
+  //Add New TODO:
+  const addTodo = ()=>{
+    const value = {
+      text: newTodo,
+      completed: false,
+      Editing: false,
+      editText: newTodo,
+    };
+    
+
+  }
 
   return (
     <>
