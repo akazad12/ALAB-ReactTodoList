@@ -25,7 +25,7 @@ const ToDoElement = ({ todo, index, toggleComplete, deleteTodo, startEdit, saveE
 ) : (
   <>
     <span>
-      {todo.todo}
+      {todo.text}
     </span>
 
     <button
@@ -51,7 +51,7 @@ export default function CreateList() {
   const addTodo = () => {
     if (input === "") return;
     const newTodo = {
-      todo: input,
+      text: input,
       isCompleted: false,
       isEditing: false,
       editText: input
