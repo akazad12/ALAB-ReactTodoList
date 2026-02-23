@@ -1,18 +1,24 @@
 import { useState } from "react";
 
+let todoList = []
+
 export default function CreateList() {
-  const [todos,setTodos] = useState([])
+  const [todos,setTodos] = useState({
+    todo: "",
+    isCompleted: false
+  })
 
-  //Add New TODO:
+  //Add  TODO:
   const addTodo = ()=>{
-    const value = {
-      text: newTodo,
-      completed: false,
-      Editing: false,
-      editText: newTodo,
-    };
-    
-
+    if(todos.todo){
+      todoList.push(todos)
+      setTodos({
+        todo: "",
+        isCompleted:false
+      })
+    }
+    console.log("list of todos", todoList)
+ 
   }
 
   return (
@@ -20,10 +26,17 @@ export default function CreateList() {
       <h1>Todo List</h1>
 
       {/* Adds a new task */}
-      <input type="text" placeholder="Add new todo" />
+      <input 
+      type="text" 
+      value = {todos.todo}
+      placeholder="Add new todo"
+      onChange={(e)=> setTodos({
+        todo: e.target.value,
+        isCompleted: false
+      })} />
 
       {/* Button to add new task */}
-      <button>Add</button>
+      <button onClick={addTodo}>Add</button>
       {/* ============================================================ */}
 
       {/* List of Todos with delete and edit functionality */}
