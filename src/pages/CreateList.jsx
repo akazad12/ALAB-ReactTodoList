@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const ToDoElement = ({ todo, index, toggleComplete, deleteTodo }) => {
+const ToDoElement = ({ todo, index, toggleComplete, deleteTodo, startEdit, saveEdit, handleEditChange }) => {
   return (
     <li style={{ marginBottom: "10px" }}>
       <input
@@ -9,10 +9,37 @@ const ToDoElement = ({ todo, index, toggleComplete, deleteTodo }) => {
         onChange={() => toggleComplete(index)}
       />
 
-      <span>{todo.todo}</span>
-      <button onClick={() => deleteTodo(index)} disabled={!todo.isCompleted}>
-        Delete
-      </button>
+      {todo.isEditing ? (
+  <>
+    <input
+      type="text"
+      value={todo.editText}
+      onChange={(e) =>
+        handleEditChange(index, e.target.value)
+      }
+    />
+    <button onClick={() => saveEdit(index)}>
+      Save
+    </button>
+  </>
+) : (
+  <>
+    <span>
+      {todo.todo}
+    </span>
+
+    <button
+      onClick={() => deleteTodo(index)}
+      disabled={!todo.isCompleted}
+    >
+      Delete
+    </button>
+
+    <button onClick={() => startEdit(index)}>
+      Edit
+    </button>
+  </>
+)}
     </li>
   );
 };
@@ -48,6 +75,40 @@ export default function CreateList() {
     setTodos(filtered);
   };
 
+  const startEdit = (index) => {
+  const updated = todos.map((todo, i) =>
+    i === index
+      ? { ...todo, isEditing: true }
+      : todo
+  );
+
+  setTodos(updated);
+};
+
+const handleEditChange = (index, value) => {
+  const updated = todos.map((todo, i) =>
+    i === index
+      ? { ...todo, editText: value }
+      : todo
+  );
+
+  setTodos(updated);
+};
+
+const saveEdit = (index) => {
+  const updated = todos.map((todo, i) =>
+    i === index
+      ? {
+          ...todo,
+          text: todo.editText,
+          isEditing: false,
+        }
+      : todo
+  );
+
+  setTodos(updated);
+};
+
   return (
     <>
       <h1>Todo List</h1>
@@ -75,6 +136,9 @@ export default function CreateList() {
               index={index}
               toggleComplete={onCompletion}
               deleteTodo={deleteTodo}
+              startEdit={startEdit}
+              saveEdit={saveEdit}
+              handleEditChange={handleEditChange}
             />
           );
         })}
