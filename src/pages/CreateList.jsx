@@ -3,19 +3,20 @@ import { useState } from "react";
 
 
 const ToDoElement= ({todo,index,toggleComplete})=>{
-  return(
-    <li>
+  return (
+  <li style={{ marginBottom: "10px" }}>
+    <input
+      type="checkbox"
+      checked={todo.isCompleted}
+      onChange={() => toggleComplete(index)}
+    />
+
+    <span>
       {todo.todo}
-      <button
-       onClick= {()=>toggleComplete(index)}
-      >
-        Done
-      </button>
-
-    </li>
-  )
+    </span>
+  </li>
+);
 }
-
 export default function CreateList() {
   const [todos, setTodos] = useState([]);   
   const [input, setInput] = useState("");  
