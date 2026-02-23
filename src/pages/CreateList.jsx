@@ -26,6 +26,8 @@ export default function CreateList() {
     const newTodo = {
       todo: input,
       isCompleted: false,
+      isEditing: false,
+      editText: input
     };
 
     setTodos([...todos, newTodo]);
