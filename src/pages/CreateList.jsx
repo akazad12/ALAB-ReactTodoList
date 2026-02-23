@@ -1,12 +1,17 @@
 import { useState } from "react";
 
-let todoList = []
 
-const ToDoElement= ({value,index})=>{
-  console.log("value",value)
+
+const ToDoElement= ({todo,index,toggleComplete})=>{
   return(
     <li>
-      {value.todo}
+      {todo.todo}
+      <button
+       onClick= {()=>toggleComplete(index)}
+      >
+        Done
+      </button>
+
     </li>
   )
 }
@@ -27,6 +32,17 @@ export default function CreateList() {
     setInput("");
  
   }
+
+  //completed Todo
+const onCompletion = (index) => {
+  const updatedTodos = todos.map((todo, i) =>
+    i === index
+      ? { ...todo, isCompleted: true }
+      : todo
+  );
+
+  setTodos(updatedTodos);
+};
 
   return (
     <>
@@ -50,9 +66,10 @@ export default function CreateList() {
        todos.map((value,index) => {
         return(
           <ToDoElement
-            key = {index}
-            value = {value}
-            index = {index}          
+            key ={index}
+            todo = {value}
+            index = {index}         
+            toggleComplete={onCompletion} 
           />
         )
       })
