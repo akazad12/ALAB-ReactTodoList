@@ -2,22 +2,29 @@ import { useState } from "react";
 
 let todoList = []
 
+const ToDoElement= ({value,index})=>{
+  console.log("value",value)
+  return(
+    <li>
+      {value.todo}
+    </li>
+  )
+}
+
 export default function CreateList() {
-  const [todos,setTodos] = useState({
-    todo: "",
-    isCompleted: false
-  })
+  const [todos, setTodos] = useState([]);   
+  const [input, setInput] = useState("");  
 
   //Add  TODO:
   const addTodo = ()=>{
-    if(todos.todo){
-      todoList.push(todos)
-      setTodos({
-        todo: "",
+    if(input==="") return;
+    const newTodo= {
+        todo: input,
         isCompleted:false
-      })
-    }
-    console.log("list of todos", todoList)
+      }
+    
+    setTodos([...todos,newTodo]);
+    setInput("");
  
   }
 
@@ -28,37 +35,29 @@ export default function CreateList() {
       {/* Adds a new task */}
       <input 
       type="text" 
-      value = {todos.todo}
+      value = {input}
       placeholder="Add new todo"
-      onChange={(e)=> setTodos({
-        todo: e.target.value,
-        isCompleted: false
-      })} />
+      onChange={(e)=> setInput(e.target.value)} />
 
       {/* Button to add new task */}
       <button onClick={addTodo}>Add</button>
+      
       {/* ============================================================ */}
 
       {/* List of Todos with delete and edit functionality */}
       <ul>
-        <li>
-          <input type="checkbox" />
-          {/* render this if editing */}
-
-          <>
-            <input type="text" />
-            <button>Save</button>
-          </>
-
-          {/* render this if not editing */}
-          <>
-            <h3>
-              completed stuff
-              <button>Edit</button>
-              <button>Delete</button>
-            </h3>
-          </>
-        </li>
+      {
+       todos.map((value,index) => {
+        return(
+          <ToDoElement
+            key = {index}
+            value = {value}
+            index = {index}          
+          />
+        )
+      })
+       }
+      
       </ul>
     </>
   );
