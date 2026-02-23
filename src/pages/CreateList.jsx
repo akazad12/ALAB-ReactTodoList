@@ -57,7 +57,7 @@ export default function CreateList() {
       editText: input
     };
 
-    setTodos([...todos, newTodo]);
+    setTodos([newTodo, ...todos]);
     setInput("");
   };
 
